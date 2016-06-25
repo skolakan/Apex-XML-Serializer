@@ -10,34 +10,34 @@ Serializes and Deserializes an Apex object to XML and vice versa. It also has fu
 Use the methods in the XMLSerializer class to perform round-trip XML serialization and deserialization of Apex objects.
 
 ##XMLSerializer Methods
-The following are methods for XMLSerializer. 
+Following are the XMLSerializer methods. 
 
- - serialize(objectToSerialize)
- 	    Serializes Apex objects into XML content.
+ - _serialize(objectToSerialize)_  
+	    Serializes Apex objects into XML content.
 	 
- - serialize(objectToSerialize,suppressApexObjectNulls,addRootElementName)
-		Suppresses null values when serializing Apex objects into XML content and wraps entire content with 'addRootElementName' when supplied and ignores empty objects from serializing.
+ - _serialize(objectToSerialize,suppressApexObjectNulls,addRootElementName)_  
+	    Suppresses null values when serializing Apex objects into XML content and wraps entire content with 'addRootElementName' when supplied and ignores empty objects from serializing.
 		   
- - deSerialize(xmlString, apexType)
-		Deserializes the specified XML string into an Apex object of the specified type.
+ - _deSerialize(xmlString, apexType)_  
+	    Deserializes the specified XML string into an Apex object of the specified type.
       
- - deSerialize(xmlString,apexType,deSerializeNodesAsArray)
-        Deserializes the specified XML string into an Apex object of the specified type and deserializes all elements specified in 'deSerializeNodesAsArray' as array.
+ - _deSerialize(xmlString,apexType,deSerializeNodesAsArray)_  
+            Deserializes the specified XML string into an Apex object of the specified type and deserializes all elements specified in 'deSerializeNodesAsArray' as array.
        
- - deSerializeUnTyped(xmlString)
-		Deserializes the specified XML string into collection of primitive data types.
- - deSerializeUnTyped(xmlString,deSerializeNodesAsArray)
-		Deserializes the XML string into collection of primitive data types. All node names specified in 'deSerializeNodesAsArray' will be deserialized as arrays.
- 
- - XMLToJSON(xmlString)
-		Converts specified XML string into JSON string.
-		
- - XMLToJSON(xmlString,deSerializeNodesAsArray)
-		Converts specified XML string into JSON string and converts nodes specified in 'deSerializeNodesAsArray' as arrays.
- 
- - JSONToXML(jsonString)
-		Converts specified JSON string to XML.
-		
-  - JSONToXML(jsonString,suppressNulls)
-		Converts specified JSON string to XML and ignores all empty tags if 'suppressNulls' is true
+ - _deSerializeUnTyped(xmlString)_  
+	    Deserializes the specified XML string into collection of primitive data types.
 
+ - _deSerializeUnTyped(xmlString,deSerializeNodesAsArray)_  
+	    Deserializes the XML string into collection of primitive data types. All node names specified in 'deSerializeNodesAsArray' will be deserialized as arrays.
+ 
+ - _XMLToJSON(xmlString)_  
+	    Converts specified XML string into JSON string.
+		
+ - _XMLToJSON(xmlString,deSerializeNodesAsArray)_  
+	    Converts specified XML string into JSON string and converts nodes specified in 'deSerializeNodesAsArray' as arrays.
+ 
+ - _JSONToXML(jsonString)_  
+	    Converts specified JSON string to XML.
+		
+  - _JSONToXML(jsonString,suppressNulls)_  
+	    Converts specified JSON string to XML and ignores all empty tags if 'suppressNulls' is true
