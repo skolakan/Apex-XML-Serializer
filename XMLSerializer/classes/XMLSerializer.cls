@@ -30,8 +30,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 public class XMLSerializer{
     
     //Private Members
-    private Boolean SerializeNulls = true;  							// Serializes XML nodes even if the content is null
-    private String RootElement;              							// Root element to wrap around the serialized string.
+    private Boolean serializeNulls = true;  							// Serializes XML nodes even if the content is null
+    private String rootElement;              							// Root element to wrap around the serialized string.
     private Set<String> deSerializeAsArrayNodes = new Set<String>();	// Collection of node names to be deserialize as array.
     
     /*
@@ -48,7 +48,7 @@ public class XMLSerializer{
 @Description    : Serializes the object to XML string.
 @Parameter      : objectToSerialize = Apex object to serialize into XML
 @Parameter      : suppressApexObjectNulls = if true, it will not serialize empty elements to XML.
-@Parameter		: Name of the root element to wrap serialized string with.
+@Parameter	: Name of the root element to wrap serialized string with.
 @Returns        : XML String
 */
     public String serialize(object objectToSerialize,boolean suppressApexObjectNulls,String addRootElementName){
@@ -62,7 +62,7 @@ public class XMLSerializer{
 @Parameter      : jsonString = jsonString
 @Returns        : XML String
 */
-    public string JsonToXML(String jsonString){
+    public String jsonToXML(String jsonString){
         object deSerialized = JSON.deserializeUntyped(jsonString);               
         return !String.isEmpty(RootElement) ? Wrap(RootElement,serialize((Map<String,Object>)deSerialized)) : serialize((Map<String,Object>)deSerialized);
     }
@@ -70,10 +70,10 @@ public class XMLSerializer{
     /*
 @Description    : Converts JSON string to XML String.
 @Parameter      : jsonString = jsonString
-@Parameter		: suppressNulls = ignores empty Json elements, if true
+@Parameter	: suppressNulls = ignores empty Json elements, if true
 @Returns        : XML String
 */
-    public string JsonToXML(String jsonString,boolean suppressNulls){
+    public String jsonToXML(String jsonString,boolean suppressNulls){
         this.SerializeNulls = !suppressNulls;       
         return JsonToXML(jsonString);
     }
@@ -84,7 +84,7 @@ public class XMLSerializer{
 @Parameter      : apexType  = type of object to deSerialize to
 @Returns        : object of type apexType
 */
-    public object deSerialize(String xmlString, System.Type apexType){   
+    public Object deSerialize(String xmlString, System.Type apexType){   
         String json = XMLToJson(xmlString); 
         return System.JSON.deserialize(json,apexType);  		
     }
@@ -96,7 +96,7 @@ public class XMLSerializer{
 @Parameter      : deSerializeNodesAsArray  = collection of node names to deserialize as array (Even if xml representation is not an array)
 @Returns        : object of type apexType
 */
-    public object deSerialize(String xmlString, System.Type apexType,Set<String> deSerializeNodesAsArray){   
+    public Object deSerialize(String xmlString, System.Type apexType,Set<String> deSerializeNodesAsArray){   
         this.deSerializeAsArrayNodes = toLower(deSerializeNodesAsArray);
         return deSerialize(xmlString,apexType);		
     }    
@@ -106,7 +106,7 @@ public class XMLSerializer{
 @Parameter      : xmlString = xml String to deSerialize
 @Returns        : collection of primitive data types
 */  
-    public object deSerializeUnTyped(String xmlString){  
+    public Object deSerializeUnTyped(String xmlString){  
         return xmlToUnTyped(xmlString);  		
     }
     
@@ -116,7 +116,7 @@ public class XMLSerializer{
 @Parameter      : deSerializeNodesAsArray  = collection of node names to deserialize as array (Even if xml representation is not an array)
 @Returns        : collection of primitive data types
 */
-    public object deSerializeUnTyped(String xmlString,Set<String> deSerializeNodesAsArray){  
+    public Object deSerializeUnTyped(String xmlString,Set<String> deSerializeNodesAsArray){  
         this.deSerializeAsArrayNodes = toLower(deSerializeNodesAsArray);
         return xmlToUnTyped(xmlString);  		
     }
@@ -126,7 +126,7 @@ public class XMLSerializer{
 @Parameter      : xmlString = XML String to convert
 @Returns        : JSON String
 */
-    public  string XMLToJSON(String xmlString){
+    public  String XMLToJSON(String xmlString){
         return System.JSON.serialize(XMLToUnTyped(xmlString));
     } 
     
@@ -136,7 +136,7 @@ public class XMLSerializer{
 @Parameter      : deSerializeNodesAsArray  = collection of node names to deserialize as array (Even if xml representation is not an array)
 @Returns        : JSON String
 */
-    public  string XMLToJSON(String xmlString,Set<String> deSerializeNodesAsArray){  
+    public  String xmlToJSON(String xmlString,Set<String> deSerializeNodesAsArray){  
         this.deSerializeAsArrayNodes = toLower(deSerializeNodesAsArray);
         return System.JSON.serialize(XMLToUnTyped(xmlString));
     }   
@@ -188,7 +188,7 @@ public class XMLSerializer{
     /*
 @Description    : Wraps value with key xml element
 @Parameter      : key = Xml node name
-@parameter		: value = xml node value
+@parameter	: value = xml node value
 @Returns        : XML String
 */
     private String wrap(String key, String value){
@@ -212,7 +212,7 @@ public class XMLSerializer{
 @Parameter      : e = xml node (of type xmldom.Element)
 @Returns        : object
 */
-    private object parseNode(xmldom.Element e){
+    private Object parseNode(xmldom.Element e){
         if(e.childNodes.size()>0) return complexNodeToMap(e); 
         else  return e.nodeValue;  
     }
