@@ -30,9 +30,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 public class XMLSerializer{
     
     //Private Members
-    private Boolean serializeNulls = true;  							// Serializes XML nodes even if the content is null
-    private String rootElement;              							// Root element to wrap around the serialized string.
-    private Set<String> deSerializeAsArrayNodes = new Set<String>();	// Collection of node names to be deserialize as array.
+    private Boolean serializeNulls = true;  				// Serializes XML nodes even if the content is null
+    private String rootElement;              				// Root element to wrap around the serialized string.
+    private Set<String> deSerializeAsArrayNodes = new Set<String>();	// Collection of node names to be deserialized as array.
     
     /*
 @Description    : Serializes the object passed to XML string
