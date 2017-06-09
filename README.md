@@ -6,10 +6,10 @@
 # Apex-XML-Serializer
 Serializes and Deserializes an Apex object to XML and vice versa. It also has functionality to convert between XML and Json.
 
-##Usage
+## Usage
 Use the methods in the XMLSerializer class to perform round-trip XML serialization and deserialization of Apex objects.
 
-##XMLSerializer Methods
+## XMLSerializer Methods
 Following are the XMLSerializer methods. 
 
  -**serialize(objectToSerialize)**  
@@ -36,8 +36,14 @@ Following are the XMLSerializer methods.
  -**XMLToJSON(xmlString,deSerializeNodesAsArray)**  
 	    _`Converts specified XML string into JSON string and converts nodes specified in 'deSerializeNodesAsArray' as arrays.`_
  
- -**JSONToXML(jsonString)`**  
+ -**JSONToXML(jsonString)**  
 	    _`Converts specified JSON string to XML.`_
 		
   -**JSONToXML(jsonString,suppressNulls)**  
 	    _`Converts specified JSON string to XML and ignores all empty tags if 'suppressNulls' is true.`_
+	    
+## Limitations
+* XML attributes are not supported.
+
+## Areas of interest/Future work
+* Ability to replace tags : Often times we need xml tags in a format that apex does not allow as variable names like one with special characters or reserved words. It would be useful to be able to replace them in the serialization or deserialization process.
