@@ -46,4 +46,4 @@ Following are the XMLSerializer methods.
 * XML attributes are not supported.
 
 ## Areas of interest/Future work
-* Ability to replace tags : Often times we need xml tags in a format that apex does not allow as variable names like one with special characters or reserved words. It would be useful to be able to replace them in the serialization or deserialization process.
+* Ability to replace XML tag names : Often times we need xml tag names in a format that apex would not allow as variable names like one with special characters or reserved words. It would be useful to be able to replace them in the serialization or deserialization process.
