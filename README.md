@@ -12,44 +12,34 @@ Use the methods in the XMLSerializer class to perform round-trip XML serializati
 ## XMLSerializer Methods
 Following are the XMLSerializer methods. 
 
- -**serialize(objectToSerialize )**  
- 
+ -**serialize(objectToSerialize )**   
 	    _`Serializes Apex objects into XML content.`_
 	 
- -**serialize(objectToSerialize , suppressApexObjectNulls, addRootElementName)**  
- 
+ -**serialize(objectToSerialize , suppressApexObjectNulls, addRootElementName)**   
 	    _`Suppresses null values when serializing Apex objects into XML content and wraps entire content with 'addRootElementName' when supplied and ignores empty objects from serializing.`_
 		   
- -**deSerialize(xmlString, apexType)** 
- 
+ -**deSerialize(xmlString, apexType)**  
 	    _`Deserializes the specified XML string into an Apex object of the specified type.`_
       
- -**deSerialize(xmlString,apexType, deSerializeNodesAsArray)**
- 
+ -**deSerialize(xmlString,apexType, deSerializeNodesAsArray)** 
         _`Deserializes the specified XML string into an Apex object of the specified type and deserializes all elements specified in 'deSerializeNodesAsArray' as array.`_
        
- -**deSerializeUnTyped(xmlString)**
- 
+ -**deSerializeUnTyped(xmlString)** 
 	    _`Deserializes the specified XML string into collection of primitive data types.`_
 
- -**deSerializeUnTyped(xmlString, deSerializeNodesAsArray)** 
- 
+ -**deSerializeUnTyped(xmlString, deSerializeNodesAsArray)**  
 	    _`Deserializes the XML string into collection of primitive data types. All node names specified in 'deSerializeNodesAsArray' will be deserialized as arrays.`_
  
- -**XMLToJSON(xmlString)**
- 
+ -**XMLToJSON(xmlString)** 
 	    _`Converts specified XML string into JSON string.`_
 		
- -**XMLToJSON(xmlString, deSerializeNodesAsArray)**
- 
+ -**XMLToJSON(xmlString, deSerializeNodesAsArray)** 
 	    _`Converts specified XML string into JSON string and converts nodes specified in 'deSerializeNodesAsArray' as arrays.`_
  
- -**JSONToXML(jsonString)**  
- 
+ -**JSONToXML(jsonString)**   
 	    _`Converts specified JSON string to XML.`_
 		
-  -**JSONToXML(jsonString, suppressNulls)**  
-  
+  -**JSONToXML(jsonString, suppressNulls)**    
 	    _`Converts specified JSON string to XML and ignores all empty tags if 'suppressNulls' is true.`_
 	    
 ## Limitations
