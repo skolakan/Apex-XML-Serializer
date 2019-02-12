@@ -42,13 +42,17 @@ Following are the XMLSerializer methods.
   -**JSONToXML(jsonString, suppressNulls)**    
 	    _`Converts specified JSON string to XML and ignores all empty tags if 'suppressNulls' is true.`_
 
-##Usage
+### Usage:
 
-Consider the following class, for example:
+- Serialization and de-serialization happens works on the class properties
+- For XML de-serialization to Apex object, important part is to figure out matching class definition for the XML. 
 
-public class clsLibrary {
+
+_Consider the following class, for example:_
+
+    public class clsLibrary {
     
-  public clsCatalog catalog;
+    public clsCatalog catalog;
     
     public clsLibrary(){
         //populate some data
@@ -103,161 +107,166 @@ public class clsLibrary {
     public class clsAuthors {
         public List<String> author;
     }
+    }
 
-}
+#### Roundtrip XML Serialization and Deserialization:
 
+    XMLSerializer serializer = new XMLSerializer();
+	clsLibrary library = new clsLibrary();
 
+	//Serialize Apex object to XML
+	String serializedXML = serializer.serialize(library,true, null);
 
-Roundtrip XML Serialization and Deserialization: 
-XMLSerializer serializer = new XMLSerializer();
-clsLibrary library = new clsLibrary();
+	//Deserialize XML back to Apex object. Pass any nodes that must be deSerialized as arrays.
+	clsLibrary deSerializedLibrary = (clsLibrary)serializer.deSerialize(xmlStringAgain,clsLibrary.class,new Set<String>{'author'});
 
-//Serialize Apex object to XML
-String serializedXML = serializer.serialize(library,true, null);
+	System.debug('Number of books in library:' + library.catalog.books.book.size());
+	System.debug('Book1 title:' + library.catalog.books.book[0].title);
+	System.debug('Book2 title:' + library.catalog.books.book[1].title);
 
-//Deserialize XML back to Apex object. Pass any nodes that must be deSerialized as arrays.
-clsLibrary deSerializedLibrary = (clsLibrary)serializer.deSerialize(xmlStringAgain,clsLibrary.class,new Set<String>{'author'});
+	System.debug('Serialized XML:' + serializedXML);
+	System.debug('Number of books in deserialized library:' + deSerializedLibrary.catalog.books.book.size());
 
-System.debug('Number of books in library:' + library.catalog.books.book.size());
-System.debug('Book1 title:' + library.catalog.books.book[0].title);
-System.debug('Book2 title:' + library.catalog.books.book[1].title);
-System.debug('Serialized XML:' + serializedXML);
-System.debug('Number of books in deserialized library:' + deSerializedLibrary.catalog.books.book.size());
-System.debug('Deserialized Book1 title:' + deSerializedLibrary.catalog.books.book[0].title);
-System.debug('Deserialized Book2 title:' + deSerializedLibrary.catalog.books.book[1].title);
-Output:
-DEBUG|Number of books in library:2
-DEBUG|Book1 title:Advanced Apex Programming
-DEBUG|Book2 title:Design Patterns
-DEBUG|Serialized XML: (pretty printed for readability)
-<catalog>
-    <books>
-        <book>
-            <title>Advanced Apex Programming</title>
-            <subTitle>for Salesforce.com and Force.com</subTitle>
-            <price/>
-            <authors>
-                <author>Dan Appleman</author>
-            </authors>
-        </book>
-        <book>
-            <title>Design Patterns</title>
-            <subTitle/>
-            <price>37.88</price>
-            <authors>
-                <author>Erich Gamma</author>
-                <author>Richard Helm</author>
-                <author>Ralph Johnson</author>
-                <author>John Vlissides</author>
-            </authors>
-        </book>
-    </books>
-</catalog>
-DEBUG|Number of books in deserialized library:2
-DEBUG|Deserialized Book1 title:Advanced Apex Programming
-DEBUG|Deserialized Book2 title:Design Patterns
+	System.debug('Deserialized Book1 title:' + 	deSerializedLibrary.catalog.books.book[0].title);
 
+	System.debug('Deserialized Book2 title:' + deSerializedLibrary.catalog.books.book[1].title);
 
+	Output:
+	DEBUG|Number of books in library:2
 
-Convert between XML and JSON:
+	DEBUG|Book1 title:Advanced Apex Programming
 
+	DEBUG|Book2 title:Design Patterns
 
-XMLSerializer serializer = new XMLSerializer();
-clsLibrary library = new clsLibrary();
-//Serialize with options
-string serializedXML = serializer.serialize(library,true, null);
+	DEBUG|Serialized XML:  (pretty printed)
 
-//Convert XML to JSON
-string jsonString = serializer.XMLToJson(serializedXML);
+	<catalog>
+	    <books>
+	        <book>
+	            <title>Advanced Apex Programming</title>
+	            <subTitle>for Salesforce.com and Force.com</subTitle>
+	            <price/>
+	            <authors>
+	                <author>Dan Appleman</author>
+	            </authors>
+	        </book>
+	        <book>
+	            <title>Design Patterns</title>
+	            <subTitle/>
+	            <price>37.88</price>
+	            <authors>
+	                <author>Erich Gamma</author>
+	                <author>Richard Helm</author>
+	                <author>Ralph Johnson</author>
+	                <author>John Vlissides</author>
+	            </authors>
+	        </book>
+	    </books>
+	</catalog>
+	DEBUG|Number of books in deserialized library:2
 
-//Convert JSON to XML
-string xmlStringAgain = serializer.JSonToXML(jsonString);
+	DEBUG|Deserialized Book1 title:Advanced Apex Programming
 
-system.debug('Serialized XML:' + serializedXML);
-system.debug('JSON from XML:' + jsonString);
-system.debug('XML again from JSON:' + xmlStringAgain);
+	DEBUG|Deserialized Book2 title:Design Patterns
 
+#### Convert between XML and JSON:
 
-DEBUG|Serialized XML:(pretty printed for readability)
-<catalog>
-    <books>
-        <book>
-            <title>Advanced Apex Programming</title>
-            <subTitle>for Salesforce.com and Force.com</subTitle>
-            <authors>
-                <author>Dan Appleman</author>
-            </authors>
-        </book>
-        <book>
-            <title>Design Patterns</title>
-            <price>37.88</price>
-            <authors>
-                <author>Erich Gamma</author>
-                <author>Richard Helm</author>
-                <author>Ralph Johnson</author>
-                <author>John Vlissides</author>
-            </authors>
-        </book>
-    </books>
-</catalog>
+    XMLSerializer serializer = new XMLSerializer();
+	clsLibrary library = new clsLibrary();
 
+	//Serialize with options
+	string serializedXML = serializer.serialize(library,true, null);
 
-DEBUG|JSON from XML:(pretty printed for readability)
+	//Convert XML to JSON
+	string jsonString = serializer.XMLToJson(serializedXML);
 
-{
-   "catalog": {
-      "books": {
-         "book": [
-            {
-               "authors": {
-                  "author": "Dan Appleman"
-               },
-               "subTitle": "for Salesforce.com and Force.com",
-               "title": "Advanced Apex Programming"
-            },
-            {
-               "authors": {
-                  "author": [
-                     "Erich Gamma",
-                     "Richard Helm",
-                     "Ralph Johnson",
-                     "John Vlissides"
-                  ]
-               },
-               "price": "37.88",
-               "title": "Design Patterns"
-            }
-         ]
-      }
-   }
-}
+	//Convert JSON to XML
+	string xmlStringAgain = serializer.JSonToXML(jsonString);
 
+	system.debug('Serialized XML:' + serializedXML);
+	system.debug('JSON from XML:' + jsonString);
+	system.debug('XML again from JSON:' + xmlStringAgain);
 
-DEBUG|XML again from JSON:(pretty printed for readability)
+	**DEBUG|**Serialized XML:(pretty printed for readability)
 
-<catalog>
-    <books>
-        <book>
-            <authors>
-                <author>Dan Appleman</author>
-            </authors>
-            <subTitle>for Salesforce.com and Force.com</subTitle>
-            <title>Advanced Apex Programming</title>
-        </book>
-        <book>
-            <authors>
-                <author>Erich Gamma</author>
-                <author>Richard Helm</author>
-                <author>Ralph Johnson</author>
-                <author>John Vlissides</author>
-            </authors>
-            <price>37.88</price>
-            <title>Design Patterns</title>
-        </book>
-    </books>
-</catalog>
+	<catalog>
+	    <books>
+	        <book>
+	            <title>Advanced Apex Programming</title>
+	            <subTitle>for Salesforce.com and Force.com</subTitle>
+	            <authors>
+	                <author>Dan Appleman</author>
+	            </authors>
+	        </book>
+	        <book>
+	            <title>Design Patterns</title>
+	            <price>37.88</price>
+	            <authors>
+	                <author>Erich Gamma</author>
+	                <author>Richard Helm</author>
+	                <author>Ralph Johnson</author>
+	                <author>John Vlissides</author>
+	            </authors>
+	        </book>
+	    </books>
+	</catalog>
 
-It is as simple as that.
+	**DEBUG|**JSON from XML:(pretty printed)
+
+	{
+	   "catalog": {
+	      "books": {
+	         "book": [
+	            {
+	               "authors": {
+	                  "author": "Dan Appleman"
+	               },
+	               "subTitle": "for Salesforce.com and Force.com",
+	               "title": "Advanced Apex Programming"
+	            },
+	            {
+	               "authors": {
+	                  "author": [
+	                     "Erich Gamma",
+	                     "Richard Helm",
+	                     "Ralph Johnson",
+	                     "John Vlissides"
+	                  ]
+	               },
+	               "price": "37.88",
+	               "title": "Design Patterns"
+	            }
+	         ]
+	      }
+	   }
+	}
+
+	**DEBUG|**XML again from JSON:(pretty printed)
+
+	<catalog>
+	    <books>
+	        <book>
+	            <authors>
+	                <author>Dan Appleman</author>
+	            </authors>
+	            <subTitle>for Salesforce.com and Force.com</subTitle>
+	            <title>Advanced Apex Programming</title>
+	        </book>
+	        <book>
+	            <authors>
+	                <author>Erich Gamma</author>
+	                <author>Richard Helm</author>
+	                <author>Ralph Johnson</author>
+	                <author>John Vlissides</author>
+	            </authors>
+	            <price>37.88</price>
+	            <title>Design Patterns</title>
+	        </book>
+	    </books>
+	</catalog>
+
+It is as simple as that to serialize/de-serialize an apex object to XML and XML to apex object. 
+
 	    
 ## Limitations
 * XML attributes are not supported.
