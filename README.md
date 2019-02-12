@@ -44,7 +44,7 @@ Following are the XMLSerializer methods.
 
 ### Usage:
 
-- Serialization and de-serialization happens works on the class properties
+- Serialization and de-serialization works on the class properties.
 - For XML de-serialization to Apex object, important part is to figure out matching class definition for the XML. 
 
 
@@ -54,6 +54,7 @@ _Consider the following class, for example:_
     
     public clsCatalog catalog;
     
+    //Constructor. Initialize some data.
     public clsLibrary(){
         //populate some data
         //Create a book object
